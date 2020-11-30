@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            // Scope
+
+            let a = "a";
+            var b = "b";
+            const c = "c";
+
+            if(true){
+                console.log(a);
+                let a = 2;
+                var b = 2;
+                const c = 2;
+            }
+
+            // console.log(a); // expect a
+            // console.log(b); // expect 2
+            // console.log(c); // expect c
+
+            // why?
+            // {} ==> scope
+            // if statement, for loop, function, or simply {} on its own (not to be confused with object)
+            // rules:
+            // 1. child scope can access everything in the parent scope
+            // 2. variables defined in child remain in child. They disappear right after js exit the scope
+            // 3. 'var' does not follow rule #2
+            // 4. when js sees a variable, it will look in the current scope first and use the value if found, 
+            // if not found, it will look up in the immediate parent scope.
+            // If still not found, then the grandparent scope and above until it reaches the global scope
+
+
+            // conclusion 1: var is not scope safe
+
+            // How could that cause an issue?
+
+            // var will overwrite existing variable
+            var index = 13;
+
+            for (var index = 0; index < 4; index++) {
+                // do something
+            }
+            console.log(index); // uh oh we get 4, which overwrote the previous value
+
+            for (let index = 0; index < 4; index++) {
+
+            }
+            console.log(index);
+
+            // ----
+
+            {
+                var inScopeVar = "in scope";
+                let inScopeLet = "in scope";
+                const inScopeConst = "in scope";
+            }
+
+            console.log(inScopeVar); // ok
+            // console.log(inScopeLet); // expect error
+            // console.log(inScopeConst); // expect error
+
+            // to js, it looks like:
+            var inScopeVar;
+            {
+                inScopeVar = "in scope";
+            }
+
+            // conclusion 2: var variables are hoisted up
+
+            // console.log(aLet); // not ok, cannot access a before declaration
+            // console.log(aConst); // not ok, cannot access a before declaration
+            // console.log(aVar); // ok
+            let aLet = "let";
+            var aVar = "Var";
+            const aConst = "Const";
+
+            // to js it looks like:
+            var aVar;
+            // ---
+            // code...
+            // ---
+
+            console.log(aVar);
+
+            aVar = 'Var';
+
+            // conclusion 3: we can't access a let/const variable before declaration
+
+            console.log(window.aVar); // Var
+            console.log(window.aLet); // undefined
+
+            // conclusion 4: var variables are added to the windows object by default
+
+            
+
+            
+        </script>
+
+    </body>
+</html>
