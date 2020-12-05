@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        function add5(x) {
+            return x + 5;
+        }
+
+        const subtract = (x, y) => {
+            return x - y;
+        }
+
+        // we can omit return statement and the curly braces when the function is a 1 liner
+
+        const multiply = (x, y) => x * y;
+
+        // when there is only 1 argument, bracket is optional
+        const add2 = num => num + 2;
+
+        // the 'this' keyword in arrow function is automatically bound to parent's context
+
+        let car = {
+            colour: 'red',
+
+            drive: function(){
+                const inner = function() {
+                    console.log(this);
+                }
+                inner();
+                
+            },
+
+            honk: function(){
+
+                const inner = () => {
+                    console.log(this);
+                }
+                inner();
+            }
+        }
+
+        car.drive();
+        car.honk();
+
+
+    </script>
+
+
+</body>
+</html>
