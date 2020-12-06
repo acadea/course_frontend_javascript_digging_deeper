@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <main>
+
+    </main>
+    
+
+    <script>
+
+        const main = document.querySelector('main');
+
+        // factory function 
+        // functions that manufacture/create function
+        // aka higher order function that returns a function
+
+        // closure are functions inside function
+        // benefits: enclosing data within functions, 
+        
+        // Higher order functions are function that takes in another function or 
+        // return another function
+
+        function headingFactory(colour){
+            const closure = function(text){
+                const heading = document.createElement('h1');
+                heading.setAttribute('style', 'color: ' + colour);
+                heading.textContent = text;
+                return heading;
+            }
+            return closure;
+            // or 
+            // return function(text){
+            //     const heading = document.createElement('h1');
+            //     heading.setAttribute('style', 'color: ' + colour);
+            //     heading.textContent = text;
+            //     return heading;
+            // }
+        }
+
+
+        const createRedHeading = headingFactory('red');
+        const createGreyHeading = headingFactory('grey');
+
+        const head1 = createRedHeading('sample heading');
+        const head2 = createGreyHeading('sample heading');
+
+        main.appendChild(head1);
+        main.appendChild(head2);
+        
+        // difference with ?
+        function createHeading(colour, text){
+            const heading = document.createElement('h1');
+            heading.setAttribute('style', 'color: ' + colour);
+            heading.textContent = text;
+            return heading;
+        }
+
+        // ans: not much difference
+        // but for complex function that accepts a lot of arguments, it makes a huge difference.
+        // - easier to maintain and read. 
+        // since one function only do 1 job. Easier to debug
+
+        
+        
+        // in summary: closures/inner function are functions declared in a function
+
+        
+
+
+    </script>
+
+
+</body>
+</html>
