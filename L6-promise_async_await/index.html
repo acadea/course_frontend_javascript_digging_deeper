@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            // synchronous operations run on the spot
+            // eg console.log
+            // eg setting a variable
+            // eg if statement
+
+            // asynchronous operations run later
+            // operations will add to a queue system known as the 'Event Loop'
+            // async operations will only run after all sync operations are completed
+            // eg setTimeout
+            // eg setInterval
+
+            // sync vs async
+            // expect: hey there you, NOT hey you there
+            console.log("hey");
+            setTimeout(() => {
+                console.log("you");
+            }, 0);
+            console.log("there");
+
+            // Promise
+            // another type of async operation in js
+            // an object that holds some logic to be executed later
+            // works the same way as promises in real life.
+            // When you make a promise, you won't do it right away
+            // The promise holds until you start to take action
+            // And this makes it an async operation
+
+            const buyIceCream = function (amount = 5) {
+                // the 'new' keyword creates new object in javascript.
+                // we will talk more about 'new' in the future.
+                return new Promise(function (resolve, reject) {
+                    // the function we passed to the Promise is known as the executor function
+
+                    // this function execute the main logic of the promise
+
+                    // resolve - a function to call when the promise is successful
+
+                    // reject - a function to call when the promise has failed
+
+                    // the only rule is the logic of an executor function must be asynchronous.
+                    setTimeout(function () {
+                        if (amount < 3) {
+                            reject("not enough moneyyy");
+                        } else {
+                            resolve("An Ice Cream!!");
+                        }
+                    });
+                });
+            };
+            // demo to use buyIceCream
+            // .then() function to handle promise when it is fulfilled
+            // .catch() function to handle rejection
+            buyIceCream(5)
+                .then((response) => {
+                    console.log('success: ' + response);
+                })
+                .catch((error) => {
+                    console.log('error: ' + error);
+                });
+
+            // every .then() is returning a new instance of promise
+            // we can chain promises by keep calling the .then function
+            // whatever you return from the previous .then() will be received by the next .then
+            buyIceCream(5)
+                .then((response) => {
+                    console.log('ice create response:', response);
+                    return 'i bought an ice cream';
+                })
+                .then((response) => {
+                    console.log('got it:', response);
+                })
+
+            // or break them into multiple variables
+            const buy = buyIceCream(5);
+
+            const buy2 = buy.then((response) => {
+                console.log('splitted promise: ' + response);
+                return 'i bought an ice cream';
+            });
+
+            const buy3 = buy2.then((response) => {
+                console.log('splitted promise2: ' + response);
+            });
+
+
+            // catch can only capture error of the previous promise blocks
+            buyIceCream(5)
+                .then((response) => {
+                    console.log('success: ' + response);
+                    throw new Error('peek a boo');
+                })
+                .catch((error) => {
+                    console.log('error: ' + error);
+                }).then(() => {
+                    // this error will not be caught by the catch block
+                    throw new Error('peek a boo');
+                });
+
+            
+            // using async to simplify promise creation
+            const buyIceCream2 = async function (amount = 5) {
+                if (amount < 3) {
+                    throw new Error("not enough moneyyy");
+                } else {
+                    return "An Ice Creamm!";
+                }
+            };
+
+            buyIceCream2(10)
+                .then((response) => {
+                    console.log(response);
+                })
+
+            // what if we want to run promises synchronously?
+            // -- use the await keyword
+            // but you can only use it in an async function
+            async function main() {
+                const result2 = await buyIceCream2(10);
+                console.log(result2); // expect 'an ice scream'
+            }
+
+
+            // Promise vs callback
+            // no more callback hell with promise
+            buyIceCream(10)
+                .then((response) => {
+                    return buyIceCream(5)
+                })
+                .then((response) => {
+                    return buyIceCream(5)
+                });
+
+
+        </script>
+    </body>
+</html>
