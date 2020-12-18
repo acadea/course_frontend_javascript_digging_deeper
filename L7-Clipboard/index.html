@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <article id="content-copy">
+            Copy this crap 💩.
+        </article>
+        
+        <button id="btn-copy">Copy</button>
+        <button id="btn-paste">Paste</button>
+
+        <article id="content-paste">
+
+        </article>
+
+
+        <script>
+            const copyButton = document.getElementById("btn-copy");
+            const pasteButton = document.getElementById("btn-paste");
+
+            const pasteArticle = document.getElementById('content-paste');
+
+
+            // execCommand -- deprecated
+            // use clipboard api moving forward
+            copyButton.addEventListener("click", async function (event) {
+                const content = document.getElementById('content-copy').textContent;
+                await navigator.clipboard.writeText(content);
+                console.log(await navigator.clipboard.readText());
+            });
+
+            pasteButton.addEventListener('click', async function (event){
+                // clear paste article
+                pasteArticle.textContent = '';
+                try{
+                    // this will return an array of clipboard item
+                    const data = await navigator.clipboard.read();
+
+                    // check if img
+                    const clipboardContent = data[0];
+
+                    console.log(clipboardContent);
+
+                    // blob is a data format that represent a large binary file
+                    // eg pdf, img and etc
+                    const blob = await clipboardContent.getType('image/png');
+                    // retrieve the blob url so we can pass into image element
+                    const blobUri = window.URL.createObjectURL(blob);
+                    const img = document.createElement('img');
+                    img.src = blobUri;
+                    pasteArticle.appendChild(img);
+                }catch(err){
+                    console.log(err);
+                    // if there is an error, that means there is no image
+                    const text = await navigator.clipboard.readText();
+                    pasteArticle.textContent = text;
+                }
+                
+                
+
+            })
+
+        </script>
+    </body>
+</html>
