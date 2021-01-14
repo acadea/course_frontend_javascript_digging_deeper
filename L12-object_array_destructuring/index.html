@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        const car = {
+            brand: 'toyota',
+            name: 'corolla',
+            colour: 'blue',
+        }
+
+        // if we want to extract properties
+        // quite tedious 
+        // const brand = car.brand;
+        // const name = car.name;
+        // const colour = car.colour;
+
+        // do it in 1 go
+        const {brand, name, colour} = car;
+
+        // we can do the same in array as well
+        const fruits = ['apple', 'orange', 'kiwi', 'grape'];
+
+        // this will extract the first 2 element
+        const [apple, orange, ...other] = fruits;
+
+
+        // Use cases: swapping variable
+        let a = 5;
+        let b = 3;
+
+        // tedious
+        let temp = a;
+        a = b;
+        b = temp;
+        
+        // easier
+        [b, a] = [a, b];
+        
+
+    </script>
+</body>
+</html>

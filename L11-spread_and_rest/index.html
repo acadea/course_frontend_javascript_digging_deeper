@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // quirk of object
+        // objects in js are references in the memory
+
+        const car1 = {
+            colour: 'blue',
+        }
+        
+        // object in js are reference
+        // assigning an object to a variable does not make a copy
+        // it simply makes a pointer to the reference
+
+        // car2 is pointing to car1
+        // any changes made to car2 will change car1
+        const car2 = car1;
+
+        // This is a serious issue, you might unintentionally make changes towards properties in 
+        // your code.
+        // We intend to change car2 colour
+        // but car1's colour got changed as well. which is not intentional
+        car2.colour = 'red';
+
+        console.log(car1);
+
+        // To resolve this, we need to clone car1: a few options
+
+        // option1: use Object.assign
+        // assigning car1 to a new empty object
+        const cloned = Object.assign({}, car1);
+        
+        // option2: create a new object, and unpack car1 via the spread operator
+        // cloned is now a reference to a new object, no longer car1
+        const cloned2 = {...car1};
+
+        cloned2.colour = 'lexus';
+        console.log(car1); 
+
+
+        // spreading array means unpacking
+        console.log(...['hey', 'there', 'you']);
+        // is equivalent to
+        console.log('hey', 'there', 'you');
+        
+        // usage 2: joining arrays together
+        const array1 = [1,2,3];
+        const array2 = [4,5,6];
+
+        const array3 = [
+            ...array1, // unpacking array1 
+            ...array2, // unpacking array2
+        ];
+        console.log(array3);  // expect [1,2,3,4,5,6]
+
+        // object
+        const obj1 = {
+            hey: 'there',
+        }
+
+        const obj2 = {
+            hey: 'you',
+            food: 'banana',
+        }
+
+        const obj3 = {
+            ...obj1,
+            ...obj2,
+        }
+
+        
+
+        // what if we want to add more number?
+        // not very flexible
+        function add(x, y){
+            return x + y;
+        }
+
+        // we might want to do something like:
+        add(1,4,2,3,5);
+
+        // better way, using the rest operator
+        // to combine arguments into an array
+        // useful to create function with infinite arguments
+        function add(...num){
+            // num becomes an array
+            let sum = 0;
+            for (let index = 0; index < num.length; index++) {
+                sum += num[index];
+            }
+            return sum;
+        }
+
+        let sum = add(1,2,3,1,2);
+
+        console.log(sum);
+
+        
+
+        
+        
+
+
+
+
+    </script>
+</body>
+</html>
