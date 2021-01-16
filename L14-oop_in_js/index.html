@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            // concepts
+            //
+            // suppose we want to create multiple cars
+            // we can certainly create multiple object instance by:
+            const toyota = {
+                name: "corolla",
+                brand: "toyota",
+                drive: function () {
+                    console.log("brum brum");
+                },
+            };
+
+            const honda = {
+                name: "civic",
+                brand: "honda",
+                drive: function () {
+                    console.log("brum brum");
+                },
+            };
+
+            // but this can become quite tedious after a while
+            // would be great if we can define a template that create these car objects
+
+            // In OOP, an object template is called 'Class'
+
+            // Another analogy:
+            // If you are playing an online game
+            // You'd get to choose multiple character class to play from, eg Warrior, Mage, Knight, Ranger etc
+            // These character classes are sort of like a template right?
+            // In OOP this is known as Class
+
+            // Once you've chosen a class you would give your character a name.
+            // At this point, you've created a game character and this character is unique.
+            // In OOP this is known as an object instance.
+
+            // In summary
+            // Character === Object
+            // Character Class === Class
+            // We create (aka instantiate) an object out from a class.
+            // just like how we create a powerpoint slide out from a template
+
+            // as a convention we capitalise the class name
+            class Car {
+
+                // property
+                name = 'a car';
+
+                // constructor is a function that runs everytime an object is created from this class
+                constructor(name, brand) {
+                    console.log("creating a new brum");
+                    this.name = name;
+                    this.brand = brand;
+                }
+
+                drive = function() {
+                    console.log("brum brum");
+                }
+            }
+
+            // we use the 'new' keyword to instantiate a new Object from a class
+            const newCar = new Car("swift", "toyota");
+            newCar.drive();
+
+            // class syntax is only available after ES6 (ES6 is a JS version name released at 2015)
+
+            // Prior to ES6 we create a so called 'constructor' function:
+            function Car(name, brand) {
+                this.name = name;
+                this.brand = brand;
+                this.drive = function () {};
+            }
+
+            // to add new method
+            Car.prototype.start = function () {
+                console.log("brummm");
+            };
+        </script>
+    </body>
+</html>

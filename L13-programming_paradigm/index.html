@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            // Paradigms
+            // 1. Procedural Programming (Written as Step by Step instruction)
+            let abc = 123;
+            if (abc > 1000) {
+                abc = abc - 50;
+            }
+
+            // 2. Object Orientated Programming - OOP (hiding logic within object aka encapsulation)
+            console.log("heyyy");
+            localStorage.getItem("yo");
+
+            // 3. Functional Programming - FP (describing the logic using function)
+            const fruits = ["apple", "orange", "kiwi", "durian", "watermelon"];
+
+            const result = fruits
+                .map((fruit) => fruit.toUpperCase(fruit))
+                .filter((fruit) => fruit.length > 5);
+
+            // in non-functional way
+            let result2 = [];
+            for (let index = 0; index < fruits.length; index++) {
+                const fruit = fruits[index];
+                if(fruit.length > 5){
+                    result2.push(fruit.toUpperCase());
+                }
+            }
+
+
+ 
+        </script>
+    </body>
+</html>
