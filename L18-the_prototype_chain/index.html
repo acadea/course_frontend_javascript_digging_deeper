@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        
+        // JS is built upon a prototype system
+        // prototype is a special object that is attached to every constructor function
+
+        function Fruit(colour) {
+            this.colour = colour
+        }
+        const banana = new Fruit('yellow')
+        console.log(banana);
+
+        // what is the __proto__ property ?
+        // That is the object's prototype
+
+
+
+        // 1. Every Constructor Function / Class has 1 and only 1 Prototype object
+        // The Prototype is shared across all of the class/constructor's instances
+        // 2. Every Object Instance has a __proto__, which is a link to the their constructor function's prototype 
+
+        // 3. The Prototype object has a property called 'constructor' which is referred to the constructor function itself
+
+
+        console.log(banana.__proto__ === Fruit.prototype); // expect true
+
+        const apple = new Fruit.prototype.constructor('red');
+        const orange = new banana.__proto__.constructor('orange');
+
+        // Object instances can access to all functions in the prototype
+        Fruit.prototype.eat = function(){
+            console.log('mmmmm');
+        }
+        apple.eat();
+        orange.eat();
+
+        // So what is the difference between creating a function within the object vs storing in prototype
+
+        // compare the following 2
+        function Car(){
+            this.drive = function(){
+                // ..
+            }
+        }
+
+        function Car2(){
+
+        }
+
+        Car2.prototype.drive = function(){
+            // ..
+        }
+
+        // Car2's implementation is more efficient
+        // Why?
+        // Everytime we create Car, JS has to create a new function from scratch, which is a waste of memory
+        // 
+        // In the case of Car2, we are storing the drive function in Car2's prototype
+        // JS only needs to create the function once
+        // Since all the object instances have access to the prototype, they can use the drive function.
+        // Therefore, storing functions in the prototype is more efficient
+
+
+        
+        // another example: built in js Array constructor
+        // const arr = [];
+        const arr = new Array();
+        console.log(arr.__proto__ === Array.prototype); // true
+        console.log(Array.prototype.constructor === Array); // true
+        console.log(arr.__proto__.constructor === Array); // true
+
+        // JS stores all the array functions in the prototype
+        console.log(Array.prototype);
+
+        
+        // -----
+        // The prototype chain
+        // -----
+
+        // Everything in JS is an object.
+        // We can say everything in JS inherits from the Object Constructor
+        // Every object has a __proto__ that points to its prototype
+
+        // Question: what is the prototype of a prototype?
+        // Ans: The prototype of the object's parent
+        console.log(Array.prototype.__proto__); // expect Object's prototype
+
+        console.log(Array.prototype.__proto__ === Object.prototype); // expect true
+
+
+        // There is a hierachy in every JS data 
+        // The Object is the root ancestor of everything
+        // other types of object eg Array simply inherits from the Object Constructor function.
+        // That's the reason why we see the object's prototype when we read the __proto__ of Array's prototype
+        // This prototype ancestry system is known as the prototype chain
+
+        // Question: What is the prototype of the Object's prototype
+        console.log(Object.prototype.__proto__); // expect null
+
+
+
+        // Examples:
+
+        const name = "durian";
+        console.log(name.__proto__); // expect String's prototype
+        console.log(name.__proto__.__proto__); // expect Object's prototype
+        console.log(name.__proto__.__proto__.__proto__); // expect null
+        
+        const one = 1;
+
+        console.log(one.prototype); // expect Number's prototype
+        console.log(one.prototype.__proto__); // expect Object's prototype
+
+
+        // What really happen behind the scene when we call a function on an object instance
+        // 1. JS will try to find the function in the object's instance
+        // 2. If not found, it will look into the object's prototype
+        // 3. If not found, it will look into the object's parent's prototype
+        // 4. JS will keep looking until it reaches the root ancestor's prototype
+
+
+        Object.prototype.hey = function(){
+            console.log('heyyyy');
+        }
+        const fruits = ['apple'];
+
+        fruits.hey(); 
+
+
+
+
+        class Person {
+
+        }
+
+        console.log(Person.prototype);
+        console.log(Person.prototype.__proto__); // expect Object's prototype
+        
+        class Student extends Person{
+
+        }
+
+        console.log( Student.prototype.__proto__ ); // expect Person's prototype
+        console.log( Student.prototype.__proto__.__proto__ ); // expect Object's prototype
+
+
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            // class Animal {
+            //     eat(){
+            //         //..
+            //     }
+            //     sleep() {
+            //         // ...
+            //     }
+            // }
+
+            // class Mammal extends Animal {
+            //     // fly() {
+
+            //     // }
+            // }
+
+            // Mammal.prototype.fly = function(){
+            //     // ..
+            // }
+
+            // class Bird extends Animal {
+
+            // }
+
+            // class BirdCanFly extends Bird {
+            //     fly(){
+            //         // ..
+            //     }
+            // }
+
+            // class VeganBirdCanFly extends BirdCanFly {
+
+            // }
+
+            // class MeatloverBirdCanFly extends BirdCanFly {
+
+            // }
+
+            // class BirdCantFly extends Bird {
+
+            // }
+
+            // class BirdCantFlyButSwim extends BirdCantFly{
+
+            // }
+
+            // class BirdCantFlyButRun extends BirdCantFly {
+
+            // }
+
+            // a better way: Object composition
+            // Compose an Object from feature sets. It is more flexible than classical inheritance
+            // we add features to object
+            const Animal = {
+                eat() {
+                    // ..
+                },
+            };
+
+            const Moveable = {
+                move: function () {
+                    // ..
+                },
+            };
+
+            const Flyable = {
+                fly: function () {
+                    console.log("I believe I can Fly");
+                },
+            };
+
+            const CanEatMeat = {
+                eatMeat: true,
+            };
+
+            const CanEatVeges = {
+                eatVeges: true,
+            };
+
+            const Swimmable = {
+                swim: function () {
+                    console.log("I believe I can swim");
+                },
+            };
+
+            const Runnable = {
+                run: function () {
+                    console.log("I believe I can run");
+                },
+            };
+
+            function Penguin() {
+                return {
+                    ...Animal,
+                    ...Moveable,
+                    ...Swimmable,
+                    ...CanEatMeat,
+                };
+            }
+            const Eagle = (options = {}) => {
+                return {
+                    ...Animal,
+                    ...Moveable,
+                    ...Flyable,
+                    ...CanEatMeat,
+                    ...options,
+                };
+                // return Object.assign(
+                //     {},
+                //     Animal,
+                //     Moveable,
+                //     Flyable,
+                //     CanEatMeat,
+                //     options
+                // );
+            };
+
+            const skipper = Penguin();
+            console.log(skipper);
+
+            const gandalf = Eagle();
+            gandalf.fly();
+        </script>
+    </body>
+</html>

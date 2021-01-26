@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        // Polymorphism -- Classes have the same methods but different implementation
+
+        class PaymentGateway{
+            constructor(){
+                this.connect();
+            }
+            connect(){
+                // connect to payment provider
+                // ..
+            }
+            pay(amount){
+                // ..
+            }
+            refund(amount){
+                // ..
+            }
+
+        }
+
+        class Paypal extends PaymentGateway{
+            pay(amount){
+                // should implement paypal specific logic
+            }
+            refund(amount){
+                // should implement paypal specific logic
+            }
+            connect(){
+                // should implement paypal specific logic
+            }
+
+        }
+
+        class Visa extends PaymentGateway{
+            pay(amount){
+                // visa implementation
+            }
+            refund(amount){
+                // visa implementation
+            }
+            connect(){
+                // connect to visa 
+            }
+        }
+
+        class Mastercard extends PaymentGateway{
+            pay(amount){
+                // mastercard implementation
+            }
+            refund(amount){
+                // mastercard implementation
+            }
+            connect(){
+                // connect to mastercard
+            }
+        }
+
+
+        class Customer {
+
+            // the 'gateway' argument can be any object that implements the Payment Gateway methods
+            // based on this assumption, we can safely call the pay method from the gateway object
+            makePayment(gateway, amount){
+                return gateway.pay(amount)
+            }
+
+            getRefund(gateway, amount){
+                return gateway.refund(amount)
+            }
+
+            complain(){
+                // sometimes the customer complains...
+            }
+        }
+
+        // Why is this useful?
+        // We can reuse and write more generic code
+        // More flexible: if there are new payment gateway providers, 
+        // we simply need to create a new class for them, without tweaking the payment logic in customer class
+
+
+        const karen = new Customer();
+
+        const paypal = new Paypal();
+        const card = new Visa();
+
+        // we can pass on paypal or card since either of them implement the payment gateway mehtods.
+        karen.makePayment(paypal, 100);
+
+        karen.makePayment(card, 100);
+
+        // the karen complains :)
+        karen.complain();
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>
